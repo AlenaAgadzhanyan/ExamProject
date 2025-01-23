@@ -1,0 +1,47 @@
+<%= form_with(model: @review, local: true) do |form| %>
+  <% if @review.errors.any? %>
+    <div>
+      <h2>Ошибки:</h2>
+      <ul>
+        <% @review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="center">
+    <div>
+      <div class="text">
+        <%= form.label :perfomance_id, "Выберите спектакль" %>
+        <%= form.collection_select :perfomance_id, Perfomance.all, :id, :title %>
+      </div>
+
+      <div class="text">
+        <%= form.label :user_name, "Автор отзыва" %>
+        <%= form.text_field :user_name %>
+      </div>
+
+      <div class="text">
+        <%= form.label :rating, "Оценка" %>
+        <%= form.number_field :rating, min: 1, max: 10 %>
+      </div>
+
+      <div class="text">
+        <%= form.label :review_date, "Дата отзыва" %>
+        <%= form.date_field :review_date %>
+      </div>
+
+      <div class="text">
+        <%= form.label :review_text, "Отзыв" %>
+        <%= form.text_area :review_text, rows: 4 %>
+      </div>
+    </div>
+  </div>
+
+  <div class="but">
+    <ul>
+      <%= link_to 'Назад', @review.new_record? ? reviews_path : review_path(@review), class: 'button' %>
+      <%= form.submit @review.new_record? ? 'Добавить отзыв' : "Сохранить изменения", class: 'button' %>
+    </ul>
+  </div>
+<% end %>

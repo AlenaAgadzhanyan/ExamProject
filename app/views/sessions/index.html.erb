@@ -1,0 +1,21 @@
+<h1>Список сеансов</h1>
+
+<hr>
+<div class='main'>
+  <% @sessions.each do |session| %>
+    <div>
+      <%= link_to "#{session.perfomance.title}", session_path(session) %>
+      <div>
+        <span>Номер зала: <%= session.hall_number %></span>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
+
+<div class="but">
+  <ul>
+    <%= link_to "Назад", root_path, class: "button" %>
+    <%= link_to "Добавить новый сеанс", new_session_path, class: "button" %>
+  </ul>
+</div>

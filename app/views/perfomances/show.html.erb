@@ -1,0 +1,72 @@
+<h1>Спектакль: <%= @perfomance.title %></h1>
+
+<div>
+  <p><strong>Дата выхода:</strong> <%= @perfomance.release_date.strftime('%d.%m.%Y') %></p>
+  <p><strong>Продолжительность:</strong> <%= @perfomance.duration %> мин.</p>
+  <p><strong>Возрастное ограничение:</strong> <%= @perfomance.age_rating %></p>
+</div>
+
+<div class="actions">
+  <%= link_to "Назад", perfomances_path, class: "button" %>
+  <%= link_to "Изменить", edit_perfomance_path(@perfomance), class: "button" %>
+  <%= form_with model: @perfomance, method: :delete do |form| %>
+    <button type="submit" onclick="return confirm('Удалить этот спектакль?')" class="button">
+      Удалить
+    </button>
+  <% end %>
+</div>
+
+<div>
+  <h2>Сеансы</h2>
+  <% if @sessions.any? %>
+    <div>
+      <h3>Будущие сеансы:</h3>
+      <% future_sessions = @sessions.select { |session| session.start_date >= DateTime.now } %>
+      <% if future_sessions.any? %>
+        <% future_sessions.each do |session| %>
+          <strong>Зал:</strong> <%= session.hall_number %> |
+          <strong>Дата:</strong> <%= session.start_date.strftime('%d.%m.%Y') %> |
+          <strong>Время:</strong> <%= session.start_time.strftime('%H:%M') %>
+          <hr>
+        <% end %>
+      <% else %>
+        <p>Будущих сеансов для этого спектакля пока нет.</p>
+      <% end %>
+    </div>
+
+    <div>
+      <h3>Завершённые сеансы:</h3>
+      <% past_sessions = @sessions.select { |session| session.start_date < DateTime.now } %>
+      <% if past_sessions.any? %>
+        <% past_sessions.each do |session| %>
+          <strong>Зал:</strong> <%= session.hall_number %> |
+          <strong>Дата:</strong> <%= session.start_date.strftime('%d.%m.%Y') %> |
+          <strong>Время:</strong> <%= session.start_time.strftime('%H:%M') %>
+          <hr>
+        <% end %>
+      <% else %>
+        <p>Завершённых сеансов для этого спектакля пока нет.</p>
+      <% end %>
+    </div>
+
+  <% else %>
+    <p>Сеансов для этого спектакля пока нет.</p>
+  <% end %>
+</div>
+
+<div>
+  <h2>Отзывы</h2>
+  <% if @reviews.any? %>
+    <% @reviews.each do |review| %>
+      <div class="review">
+        <p><strong>Автор:</strong> <%= review.user_name %></p>
+        <p><strong>Оценка:</strong> <%= review.rating %> / 10</p>
+        <p><strong>Отзыв:</strong> <%= review.review_text %></p>
+        <p><strong>Дата отзыва:</strong> <%= review.review_date.strftime('%d.%m.%Y') %></p>
+        <hr>
+      </div>
+    <% end %>
+  <% else %>
+    <p>Отзывов для этого спектакля пока нет.</p>
+  <% end %>
+</div>

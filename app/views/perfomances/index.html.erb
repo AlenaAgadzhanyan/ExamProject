@@ -1,0 +1,21 @@
+<h1>Список спектаклей</h1>
+
+<hr>
+<div class='main'>
+  <% @perfomances.each do |perfomance| %>
+    <div>
+      <%= link_to "#{perfomance.title} (#{perfomance.release_date.strftime('%Y')})", perfomance_path(perfomance), class: "perfomance-link" %>
+      <div>
+        <span>Продолжительность: <%= perfomance.duration %> мин</span>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
+
+<div class="but">
+  <ul>
+    <%= link_to "Назад", root_path, class: "button" %>
+    <%= link_to "Добавить новый спектакль", new_perfomance_path, class: "button" %>
+  </ul>
+</div>

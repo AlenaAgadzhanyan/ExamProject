@@ -1,0 +1,37 @@
+<h1>Отзыв на спектакль "<%= @review.perfomance.title %>"</h1>
+<hr>
+<div>
+  <p><strong>Пользователь:</strong> <%= @review.user_name %></p>
+  <p><strong>Спектакль:</strong> <%= @review.perfomance.title %></p>
+  <p><strong>Оценка:</strong> <%= @review.rating %> / 10</p>
+  <p><strong>Отзыв:</strong> <%= @review.review_text %></p>
+  <p><strong>Дата просмотра спектакля:</strong> <%= @review.review_date.strftime('%d.%m.%Y') %></p>
+</div>
+
+<div class="actions">
+  <%= link_to 'Назад', reviews_path, class: 'button' %>
+  <%= link_to 'Редактировать', edit_review_path(@review), class: 'button' %>
+  <%= form_with model: @review, method: :delete do |form| %>
+    <button type="submit" onclick="return confirm('Удалить этот отзыв?')" class="button">
+      Удалить
+    </button>
+   <% end %>
+</div>
+
+<hr>
+
+<h2>Другие отзывы пользователя</h2>
+
+<div>
+  <% if @other_reviews.any? %>
+    <% @other_reviews.each do |other_review| %>
+      <div>
+        <p><strong><%= link_to 'Отзыв', review_path(other_review) %></strong> на спектакль: <%= other_review.perfomance.title %></p>
+        <p><strong>Дата отзыва:</strong> <%= other_review.review_date.strftime('%d.%m.%Y') %> </p>
+        <hr>
+      </div>
+    <% end %>
+  <% else %>
+    <p>У этого пользователя нет других отзывов.</p>
+  <% end %>
+</div>

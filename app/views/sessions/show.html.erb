@@ -1,0 +1,18 @@
+<h1>Сеанс: <%= @session.perfomance.title %> - Зал <%= @session.hall_number %></h1>
+
+<div>
+  <p><strong>Спектакль:</strong> <%= @session.perfomance.title %></p>
+  <p><strong>Номер зала:</strong> <%= @session.hall_number %></p>
+  <p><strong>Дата сеанса:</strong> <%= @session.start_date.strftime('%d.%m.%Y') %></p>
+  <p><strong>Время сеанса:</strong> <%= @session.start_time.strftime('%H:%M') %></p>
+</div>
+
+<div class="actions">
+  <%= link_to 'Назад', sessions_path, class: 'button' %>
+  <%= link_to 'Редактировать', edit_session_path(@session), class: 'button' %>
+  <%= form_with model: @session, method: :delete do |form| %>
+    <button type="submit" onclick="return confirm('Удалить этот сеанс?')" class="button">
+      Удалить
+    </button>
+   <% end %>
+</div>

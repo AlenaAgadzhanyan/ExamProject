@@ -1,0 +1,42 @@
+<%= form_with(model: @session, local: true) do |form| %>
+  <% if @session.errors.any? %>
+    <div>
+      <h2>Ошибки:</h2>
+      <ul>
+        <% @session.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="center">
+    <div>
+      <div class='text'>
+        <%= form.label :perfomance_id, "Выберите спектакль" %>
+        <%= form.collection_select :perfomance_id, Perfomance.all, :id, :title %>
+      </div>
+
+      <div class='text'>
+        <%= form.label :hall_number, "Номер зала" %>
+        <%= form.number_field :hall_number, min: 1, max: 8, required: true %>
+      </div>
+
+      <div class='text'>
+        <%= form.label :start_date, "Дата сеанса" %>
+        <%= form.date_field :start_date, min: Date.today.to_s, required: true %>
+      </div>
+
+      <div class='text'>
+        <%= form.label :start_time, "Время сеанса" %>
+        <%= form.time_select :start_time, minute_step: 5, required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="but">
+    <ul>
+      <%= link_to 'Назад', @session.new_record? ? sessions_path : session_path(@session), class: 'button' %>
+      <%= form.submit @session.new_record? ? 'Добавить сеанс' : 'Сохранить изменения', class: 'button' %>
+    </ul>
+  </div>
+<% end %>
